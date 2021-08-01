@@ -1,0 +1,58 @@
+ALGORITHM Insertion_sort
+VAR
+    tab: ARRAY_OF INTEGER[14];
+    n : INTEGER ; 
+    new : INTEGER ;
+
+    PROCEDURE Sort(arr) 
+    VAR
+    i, key, j : INTEGER;
+    BEGIN
+    FOR i FROM 0 TO arr.length-1 DO
+        key := arr[i]:
+        j=i-1;
+        WHILE (j>=0 && arr[j] > key) DO
+            arr[j + 1] := arr[j]; 
+            j := j - 1; 
+        END_WHILE
+    arr[j + 1] = key;
+    END_FOR
+    END
+
+BEGIN
+    ///////acquisition de la serie initiale des cartes//////////
+    WRITE("introduire l'ensemble des cartes en possission")
+    FOR i FROM 0 TO 13 STEP 1 DO
+        READ(tab[i])
+    END_FOR
+
+
+    sort(tab);  //Trier la serie initiale des cartes
+
+
+    WRITE("Donner la carte a introduire")  //Tirer une nouvelle carte
+    READ(new)
+    tab.push(new) //insertion de la nouvelle carte à la droite de la serie
+
+
+
+    //Solution 1: Re-tri de tout le tableau
+    Sort(tab);      // Re-tri de la nouvelle sequence de cartes
+    
+
+    //Solution 2: apres insertion du nouveau elt a droite,..
+    //on fait le balayage de la serie de gauche pour trouver la place de la nouvelle carte et par la suite
+    //on fait une translation a droite et on re-insert la nouvelle carte dans sa place adequate
+    FOR i FROM 0 TO tab.length-2 DO
+        IF (new<tab[i]) THEN
+            j := tab.length - i;
+            WHILE (j >= i) DO
+                tab[j+1] := tab[j]; // translation from left to right
+                j := j-1; // update index
+            END_WHILE
+            tab[i]:=new;
+            break;    
+        END_IF
+        i:=i+1;
+    END_FOR    
+END 
